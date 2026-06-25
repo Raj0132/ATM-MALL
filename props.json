@@ -1,0 +1,87 @@
+{
+  "page-noindex": [
+    0,
+    false
+  ],
+  "canonical-url": [
+    0,
+    "https://www.atmmall.in/"
+  ],
+  "site-meta": [
+    0,
+    {
+      "version": [
+        0,
+        197
+      ],
+      "template": [
+        0,
+        "aigenerated"
+      ],
+      "metaTitle": [
+        0,
+        "Atm Mall"
+      ],
+      "customMeta": [
+        0,
+        "&lt;!-- Google tag (gtag.js) --&gt;\n&lt;script async src=\"https://www.googletagmanager.com/gtag/js?id=G-452G8QS0ZG\"&gt;&lt;/script&gt;\n&lt;script&gt;\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag(&#39;js&#39;, new Date());\n\n  gtag(&#39;config&#39;, &#39;G-452G8QS0ZG&#39;);\n&lt;/script&gt;"
+      ],
+      "ogImageAlt": [
+        0,
+        ""
+      ],
+      "faviconPath": [
+        0,
+        "atm-logo-04-08-2022-1-YZ9bGQxN0NsEwwVl.jpg"
+      ],
+      "ogImagePath": [
+        0,
+        "untitled-design-20-AE04BEpGqKS6Lz4P.png"
+      ],
+      "aiWebsiteType": [
+        0,
+        "Business"
+      ],
+      "defaultLocale": [
+        0,
+        "system"
+      ],
+      "faviconOrigin": [
+        0,
+        "assets"
+      ],
+      "ogImageOrigin": [
+        0,
+        "assets"
+      ],
+      "ecommerceStoreId": [
+        0,
+        "store_01J8FAW6BAD6TM5MSDSE9A5PK3"
+      ],
+      "customBodyElements": [
+        0,
+        "&lt;script async src=\"https://www.googletagmanager.com/gtag/js?id=G-452G8QS0ZG\"&gt;&lt;/script&gt;&lt;script&gt;\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag(&#39;js&#39;, new Date());\n\n  gtag(&#39;config&#39;, &#39;G-452G8QS0ZG&#39;);\n&lt;/script&gt;"
+      ],
+      "customHeadElements": [
+        0,
+        ""
+      ],
+      "isPrivateModeActive": [
+        0,
+        false
+      ],
+      "demoEcommerceStoreId": [
+        0,
+        "demo_01G0E9P2R0CFTNBWEEFCEV8EG5"
+      ],
+      "shouldAddWWWPrefixToDomain": [
+        0,
+        true
+      ]
+    }
+  ],
+  "domain": [
+    0,
+    "www.atmmall.in"
+  ]
+}
