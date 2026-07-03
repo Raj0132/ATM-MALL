@@ -16,7 +16,7 @@ import {
   Check 
 } from 'lucide-react';
 
-const FRAME_COUNT = 100;
+const FRAME_COUNT = 110;
 const framePath = (index) => `/watch-frames-jpg/frame_${String(index + 1).padStart(5, '0')}.jpg`;
 
 const slides = [
@@ -142,6 +142,7 @@ export default function App() {
     message: ''
   });
   const [selectedFloor, setSelectedFloor] = useState('ground');
+  const [isFloorDropdownOpen, setIsFloorDropdownOpen] = useState(false);
 
   const frameSources = useMemo(
     () => Array.from({ length: FRAME_COUNT }, (_, index) => framePath(index)),
@@ -373,7 +374,7 @@ export default function App() {
         }`}>
           <button 
             onClick={handleDownloadBrochure}
-            className="hidden md:block rounded-full bg-white px-8 py-3.5 text-base font-bold text-black shadow-lg shadow-black/10 transition-all duration-200 hover:scale-105 hover:bg-neutral-100"
+            className="btn-luxury-primary hidden md:block rounded-full bg-white px-8 py-3.5 text-base font-bold text-black shadow-lg shadow-black/10"
           >
             Brochure
           </button>
@@ -535,15 +536,15 @@ export default function App() {
               <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
                 <a 
                   href="#inquiry"
-                  className="group flex items-center gap-2 bg-white text-black rounded-full px-8 py-3.5 text-xs font-bold hover:bg-neutral-200 hover:scale-105 hover:shadow-lg transition-all duration-200"
+                  className="btn-luxury-primary group flex items-center gap-2 bg-white text-black rounded-full px-8 py-3.5 text-xs font-bold shadow-lg"
                 >
                   Request Space
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </a>
                 
                 <button 
                   onClick={handleDownloadBrochure}
-                  className="flex items-center gap-2 bg-transparent border border-white/30 text-white rounded-full px-8 py-3.5 text-xs font-bold hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all duration-200"
+                  className="btn-luxury-ghost flex items-center gap-2 bg-transparent border border-white/30 text-white rounded-full px-8 py-3.5 text-xs font-bold"
                 >
                   Download Brochure
                 </button>
@@ -597,7 +598,7 @@ export default function App() {
                 setIsOpen(false);
                 handleDownloadBrochure();
               }}
-              className="w-full bg-white text-black rounded-full py-4 text-center text-xs font-bold hover:bg-neutral-200 transition-colors duration-200"
+              className="btn-luxury-primary w-full bg-white text-black rounded-full py-4 text-center text-xs font-bold"
             >
               Download Brochure
             </button>
@@ -751,29 +752,53 @@ export default function App() {
           </div>
  
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Floor Navigation Buttons (left side) */}
-            <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3.5 overflow-x-auto pb-4 lg:pb-0 scrollbar-none">
-              {Object.keys(floorData).map((key) => (
+            {/* Floor Navigation Dropdown (left side) */}
+            <div className="lg:col-span-4">
+              <div className="relative inline-block w-full">
+                {/* Collapsible Floor Button */}
                 <button
-                  key={key}
-                  onClick={() => setSelectedFloor(key)}
-                  className={`w-full text-left px-6 py-4.5 rounded-2xl border transition-all duration-300 whitespace-nowrap lg:whitespace-normal shrink-0 lg:shrink-1 flex items-center justify-between group ${
-                    selectedFloor === key
-                      ? 'bg-amber-400 border-amber-400 text-black shadow-xl shadow-amber-400/10'
-                      : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:border-white/20'
-                  }`}
+                  onClick={() => setIsFloorDropdownOpen(!isFloorDropdownOpen)}
+                  className="w-full text-left px-6 py-4.5 rounded-2xl border transition-all duration-300 flex items-center justify-between group bg-white/5 border-white/10 hover:bg-white/10 hover:border-amber-400/30 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl"
                 >
                   <div className="flex flex-col">
-                    <span className={`text-[10px] font-bold uppercase tracking-widest ${selectedFloor === key ? 'text-black/60' : 'text-slate-400'}`}>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-amber-400 transition-colors duration-300">
                       Level Select
                     </span>
-                    <span className="text-sm font-bold mt-0.5 capitalize">
-                      {key === 'towers' ? 'Luxury Hotel Towers' : `${key} Floor`}
+                    <span className="text-sm font-bold mt-0.5 capitalize text-white group-hover:text-amber-400 transition-colors duration-300">
+                      {selectedFloor === 'towers' ? 'Luxury Hotel Towers' : `${selectedFloor} Floor`}
                     </span>
                   </div>
-                  <ChevronRight className={`w-4 h-4 transition-transform duration-300 hidden lg:block ${selectedFloor === key ? 'translate-x-1 text-black' : 'text-slate-400 group-hover:translate-x-0.5'}`} />
+                  <ChevronRight className={`w-4 h-4 transition-all duration-300 text-slate-400 group-hover:text-amber-400 ${isFloorDropdownOpen ? 'rotate-90' : ''}`} />
                 </button>
-              ))}
+                
+                {/* Dropdown Menu */}
+                {isFloorDropdownOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-3 bg-slate-950/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                    {Object.keys(floorData).map((key) => (
+                      <button
+                        key={key}
+                        onClick={() => {
+                          setSelectedFloor(key);
+                          setIsFloorDropdownOpen(false);
+                        }}
+                        className="w-full text-left px-6 py-4 border-b border-white/5 last:border-b-0 hover:bg-white/5 transition-all duration-200 group flex items-center justify-between"
+                      >
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-amber-400 transition-colors duration-300">
+                            {key === 'towers' ? 'Luxury Hotel Towers' : `${key} Floor`}
+                          </span>
+                          <span className="text-xs font-semibold mt-0.5 text-slate-300 group-hover:text-white transition-colors duration-300">
+                            {floorData[key].title}
+                          </span>
+                        </div>
+                        {selectedFloor === key && (
+                          <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
  
             {/* Floor Detail View (right side) */}
@@ -942,14 +967,14 @@ export default function App() {
               {/* Slider Arrows */}
               <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/10 shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20 focus:outline-none"
+                className="btn-luxury-icon absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/10 shadow-lg flex items-center justify-center z-20 focus:outline-none"
                 aria-label="Previous Slide"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/10 shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20 focus:outline-none"
+                className="btn-luxury-icon absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/10 shadow-lg flex items-center justify-center z-20 focus:outline-none"
                 aria-label="Next Slide"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -1076,7 +1101,7 @@ export default function App() {
                 </p>
                 <button
                   onClick={() => setFormSubmitted(false)}
-                  className="mt-8 text-slate-300 hover:text-white text-xs font-bold border border-white/15 hover:border-white/30 rounded-full px-6 py-2.5 transition-colors"
+                  className="btn-luxury-subtle mt-8 text-slate-300 text-xs font-bold border border-white/15 rounded-full px-6 py-2.5"
                 >
                   Submit Another Inquiry
                 </button>
@@ -1143,7 +1168,7 @@ export default function App() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full bg-amber-400 hover:bg-amber-500 hover:scale-[1.01] hover:shadow-lg text-black font-bold rounded-full py-4 text-center text-xs tracking-wider uppercase transition-all duration-200 shadow-lg"
+                  className="btn-luxury-gold w-full bg-amber-400 text-black font-bold rounded-full py-4 text-center text-xs tracking-wider uppercase shadow-lg"
                 >
                   Submit Inquiry
                 </button>

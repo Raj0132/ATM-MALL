@@ -50,3 +50,183 @@ html, body, #root {
 .animate-scroll-line {
   animation: scrollLine 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
+
+/* ═══════════════════════════════════════════════
+   LUXURY BUTTON ANIMATIONS — ATM MALL
+   Effect: Color fills from inside → outward on hover
+═══════════════════════════════════════════════ */
+
+/* Shared base for all fill buttons */
+.btn-luxury-primary,
+.btn-luxury-ghost,
+.btn-luxury-gold,
+.btn-luxury-icon,
+.btn-luxury-subtle {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+}
+
+/* The fill circle — always behind text/icons via z-index: -1
+   (safe inside isolation: isolate stacking context) */
+.btn-luxury-primary::before,
+.btn-luxury-ghost::before,
+.btn-luxury-gold::before,
+.btn-luxury-icon::before,
+.btn-luxury-subtle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition:
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    width    0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    height   0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: -1; /* ← key fix: always behind text nodes */
+}
+
+/* Expand the circle to cover the entire button */
+.btn-luxury-primary:hover::before,
+.btn-luxury-ghost:hover::before,
+.btn-luxury-gold:hover::before,
+.btn-luxury-icon:hover::before,
+.btn-luxury-subtle:hover::before {
+  width: 350%;
+  height: 350%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Text color transitions on the button element cascade to all children
+   including bare text nodes — no extra z-index needed with ::before at -1 */
+
+/* ── Primary White Button (Brochure / Request Space) ──
+   Fill: Deep Midnight Sapphire #0f1b3d
+   Text goes: black → white
+*/
+.btn-luxury-primary::before {
+  background: #0f1b3d;
+}
+.btn-luxury-primary {
+  transition:
+    color       0.4s ease,
+    transform   0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow  0.35s ease;
+}
+.btn-luxury-primary:hover {
+  color: #ffffff !important;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow:
+    0 0 24px 6px rgba(15, 27, 61, 0.5),
+    0 16px 40px rgba(0, 0, 0, 0.45);
+}
+.btn-luxury-primary:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* ── Ghost / Outline Button (Download Brochure) ──
+   Fill: Champagne Gold #c9a84c
+   Text goes: white → rich black
+*/
+.btn-luxury-ghost::before {
+  background: linear-gradient(135deg, #c9a84c 0%, #f5d27a 50%, #c9a84c 100%);
+}
+.btn-luxury-ghost {
+  transition:
+    color        0.4s ease,
+    border-color 0.4s ease,
+    transform    0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   0.35s ease;
+}
+.btn-luxury-ghost:hover {
+  color: #0a0a0a !important;
+  border-color: #c9a84c !important;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow:
+    0 0 28px 8px rgba(201, 168, 76, 0.4),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.btn-luxury-ghost:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* ── Gold/Amber CTA Button (Submit Inquiry) ──
+   Fill: Deep Jewel Wine #4a0e2e
+   Text goes: black → champagne gold
+*/
+.btn-luxury-gold::before {
+  background: linear-gradient(135deg, #3a0927 0%, #6b1040 50%, #3a0927 100%);
+}
+.btn-luxury-gold {
+  transition:
+    color      0.4s ease,
+    transform  0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease;
+}
+.btn-luxury-gold:hover {
+  color: #f5d27a !important;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 0 32px 10px rgba(74, 14, 46, 0.55),
+    0 16px 48px rgba(0, 0, 0, 0.5);
+}
+.btn-luxury-gold:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* ── Icon Circle Button (Slider arrows ← →) ──
+   Fill: Champagne Gold #c9a84c
+   Icon goes: white → black
+*/
+.btn-luxury-icon::before {
+  background: linear-gradient(135deg, #c9a84c 0%, #f5d27a 50%, #c9a84c 100%);
+}
+.btn-luxury-icon {
+  transition:
+    color        0.4s ease,
+    border-color 0.35s ease,
+    transform    0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   0.35s ease;
+}
+.btn-luxury-icon:hover {
+  color: #0a0a0a !important;
+  border-color: #c9a84c !important;
+  transform: scale(1.2);
+  box-shadow:
+    0 0 20px 5px rgba(201, 168, 76, 0.45),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.btn-luxury-icon:active {
+  transform: scale(1.07);
+}
+
+/* ── Subtle Small Button (Submit Another Inquiry) ──
+   Fill: Deep Teal #0d3d3a
+   Text goes: slate → pale gold
+*/
+.btn-luxury-subtle::before {
+  background: linear-gradient(135deg, #0d3d3a 0%, #1a6b66 50%, #0d3d3a 100%);
+}
+.btn-luxury-subtle {
+  transition:
+    color        0.4s ease,
+    border-color 0.4s ease,
+    transform    0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   0.3s ease;
+}
+.btn-luxury-subtle:hover {
+  color: #f5d27a !important;
+  border-color: #1a6b66 !important;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 0 16px 4px rgba(13, 61, 58, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.4);
+}
+.btn-luxury-subtle:active {
+  transform: translateY(-1px);
+}
