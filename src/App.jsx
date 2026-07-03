@@ -142,7 +142,6 @@ export default function App() {
     message: ''
   });
   const [selectedFloor, setSelectedFloor] = useState('ground');
-  const [isFloorDropdownOpen, setIsFloorDropdownOpen] = useState(false);
 
   const frameSources = useMemo(
     () => Array.from({ length: FRAME_COUNT }, (_, index) => framePath(index)),
@@ -752,52 +751,30 @@ export default function App() {
           </div>
  
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Floor Navigation Dropdown (left side) */}
+            {/* Floor Navigation Grid (left side) */}
             <div className="lg:col-span-4">
-              <div className="relative inline-block w-full">
-                {/* Collapsible Floor Button */}
-                <button
-                  onClick={() => setIsFloorDropdownOpen(!isFloorDropdownOpen)}
-                  className="w-full text-left px-6 py-4.5 rounded-2xl border transition-all duration-300 flex items-center justify-between group bg-white/5 border-white/10 hover:bg-white/10 hover:border-amber-400/30 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl"
-                >
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-amber-400 transition-colors duration-300">
+              <div className="grid grid-cols-2 gap-3">
+                {Object.keys(floorData).map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => setSelectedFloor(key)}
+                    className={`text-left px-4 py-4 rounded-2xl border transition-all duration-300 flex flex-col items-start group ${
+                      selectedFloor === key
+                        ? 'bg-amber-400 border-amber-400 text-black shadow-xl shadow-amber-400/10'
+                        : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:border-amber-400/30 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl'
+                    }`}
+                  >
+                    <span className={`text-[9px] font-bold uppercase tracking-widest ${selectedFloor === key ? 'text-black/60' : 'text-slate-400'} block mb-1.5`}>
                       Level Select
                     </span>
-                    <span className="text-sm font-bold mt-0.5 capitalize text-white group-hover:text-amber-400 transition-colors duration-300">
-                      {selectedFloor === 'towers' ? 'Luxury Hotel Towers' : `${selectedFloor} Floor`}
+                    <span className={`text-xs font-bold capitalize line-clamp-2 ${selectedFloor === key ? 'text-black' : 'text-white'}`}>
+                      {key === 'towers' ? 'Luxury Hotel Towers' : `${key} Floor`}
                     </span>
-                  </div>
-                  <ChevronRight className={`w-4 h-4 transition-all duration-300 text-slate-400 group-hover:text-amber-400 ${isFloorDropdownOpen ? 'rotate-90' : ''}`} />
-                </button>
-                
-                {/* Dropdown Menu */}
-                {isFloorDropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 mt-3 bg-slate-950/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                    {Object.keys(floorData).map((key) => (
-                      <button
-                        key={key}
-                        onClick={() => {
-                          setSelectedFloor(key);
-                          setIsFloorDropdownOpen(false);
-                        }}
-                        className="w-full text-left px-6 py-4 border-b border-white/5 last:border-b-0 hover:bg-white/5 transition-all duration-200 group flex items-center justify-between"
-                      >
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-amber-400 transition-colors duration-300">
-                            {key === 'towers' ? 'Luxury Hotel Towers' : `${key} Floor`}
-                          </span>
-                          <span className="text-xs font-semibold mt-0.5 text-slate-300 group-hover:text-white transition-colors duration-300">
-                            {floorData[key].title}
-                          </span>
-                        </div>
-                        {selectedFloor === key && (
-                          <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                    {selectedFloor === key && (
+                      <div className="mt-2 w-2 h-2 bg-black rounded-full animate-pulse" />
+                    )}
+                  </button>
+                ))}
               </div>
             </div>
  
